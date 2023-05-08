@@ -64,10 +64,10 @@ const getData = async () => {
     console.log('value', value);
 
     try {
-      const responseAktif = await axios.post(`http://192.168.43.148:3800/list/searchAktif?nim=${data.nim}`,{
+      const responseAktif = await axios.post(`http://10.132.166.135:3800/list/searchAktif?nim=${data.nim}`,{
           cari: value.cari,
       })
-      const responseSelesai = await axios.post(`http://192.168.43.148:3800/list/searchSelesai?nim=${data.nim}`,{
+      const responseSelesai = await axios.post(`http://10.132.166.135:3800/list/searchSelesai?nim=${data.nim}`,{
           cari: value.cari,
       })
       if(responseAktif.data.status == 200){
@@ -88,9 +88,9 @@ const getData = async () => {
   const readData = async(value) => {
     console.log('value', value);
     try {
-      const aktif = await axios.get(`http://192.168.43.148:3800/list/aktif?nim=${value}`,{
+      const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${value}`,{
       })
-      const selesai = await axios.get(`http://192.168.43.148:3800/list/selesai?nim=${value}`,{
+      const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${value}`,{
       })
       if(aktif.data.status == 200){
         console.log('response', aktif.data);
@@ -112,11 +112,11 @@ const getData = async () => {
         console.log('value', value);
   
         try {
-          const response = await axios.put(`http://192.168.43.148:3800/list/done?id=${value}`,{
+          const response = await axios.put(`http://10.132.166.135:3800/list/done?id=${value}`,{
           })
-          const aktif = await axios.get(`http://192.168.43.148:3800/list/aktif?nim=${data.nim}`,{
+          const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${data.nim}`,{
           })
-          const selesai = await axios.get(`http://192.168.43.148:3800/list/selesai?nim=${data.nim}`,{
+          const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${data.nim}`,{
           })
           if(response.data.status == 200){
             console.log('response', response.data);
@@ -134,11 +134,11 @@ const getData = async () => {
       const DeleteList = async(value) => {
         console.log('value', value);
         try {
-          const response = await axios.delete(`http://192.168.43.148:3800/list?id=${value}`,{
+          const response = await axios.delete(`http://10.132.166.135:3800/list?id=${value}`,{
           })
-          const aktif = await axios.get(`http://192.168.43.148:3800/list/aktif?nim=${data.nim}`,{
+          const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${data.nim}`,{
           })
-          const selesai = await axios.get(`http://192.168.43.148:3800/list/selesai?nim=${data.nim}`,{
+          const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${data.nim}`,{
           })
           if(response.data.status == 200){
             console.log('response', response.data);
@@ -176,11 +176,11 @@ const getData = async () => {
       </View>
       <View style={styles.header}>
       <Text style={styles.title}>Welcome, {data.name}</Text>
-      <Text style={{marginTop:10}}>Yuk selesaikan list hari ini!</Text>
+      <Text style={{marginTop:10}}>Pemasukan dan pengeluaran , {data.name}</Text>
       <View style={styles.searchArea}>
       <TextInput
         style={styles.input}
-        placeholder="Cari List"
+        placeholder="Masukkan tanggal"
         placeholderTextColor="grey"
         onChangeText={(cari) => setCari(cari)}
         value={cari}
@@ -194,9 +194,8 @@ const getData = async () => {
       </View>
       </View>
       <View style={styles.todoList}>
-      <Text style ={styles.listStatus}>To do List Aktif</Text>
+      <Text style ={styles.listStatus}>Uang masuk </Text>
       {
-        
         list.map((item, index)=>{
           return(
         <View style={styles.Listcard}>
@@ -232,7 +231,7 @@ const getData = async () => {
           )
         })  
       }
-      <Text style ={styles.listStatusSelesai}>To do List Selesai</Text>
+      <Text style ={styles.listStatusSelesai}>Uang keluar</Text>
       {
         
         selesai.map((item, index)=>{

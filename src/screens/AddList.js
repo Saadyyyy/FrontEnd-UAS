@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  ToastAndroid
+  ToastAndroid,
+  ScrollView,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 // // import Illustration from '../assets/main.png'
@@ -17,13 +18,25 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DatePicker from 'react-native-date-picker'
 import { StackActions } from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker'
+
+
+
 
 
 const AddList = () => {
 
     const navigation = useNavigation();
     const [kegiatan,setKegiatan] = React.useState('');
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState(new Date());
+    const [id, setId] = useState('')
+    const [status, setStatus] = useState([])
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+      {label: 'Uang Masuk', value: 'aktif'},
+      {label: 'Uang Keluar', value: 'selesai'}
+    ]);
   
     const [data, setData] = useState({ 
       nim: '',
@@ -62,7 +75,7 @@ const AddList = () => {
       console.log('value', value);
   
       try {
-        const response = await axios.post('http://192.168.43.148:3800/list/',{
+        const response = await axios.post('http://10.132.166.135:3800/list/',{
           nim : data.nim,
           kegiatan : value.kegiatan,
           tanggal : date
@@ -83,24 +96,43 @@ const AddList = () => {
     }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
     {/* <ImageBackground source={Cover} resizeMode="cover"> */}
     <View style={styles.navbar}>
       {/* <Image source={Logo} style={styles.logo}/> */}
       </View>
      <View style={styles.body}>
-         <Text style={styles.title1}>Tambah List Baru</Text>
+         <Text style={styles.title1}>Masukkan Pengeluaran atau Pemasukan</Text>
          {/* <Image source={Illustration} style={styles.Illustration}/> */}
      </View>
      <View style={styles.form}>
-     <Text style={styles.formText}>Kegiatan</Text>
+     <Text style={styles.formText}>Masukkan</Text>
        <TextInput
        style={styles.input}
-       placeholder ="Kegiatan"
+       placeholder ="Input Disini"
 
        onChangeText={(kegiatan) => setKegiatan(kegiatan)}
        value={kegiatan}
        />
+           <Text style={styles.Text}>Status Kegiatan</Text>
+    {/* <TextInput
+        style={styles.input}
+        placeholder="Status kegiatan"
+        placeholderTextColor="white"
+        // secureTextEntry={true}
+        onChangeText={(status) => setStatus(status)}
+        value={status}
+    /> */}
+    <DropDownPicker
+      open={open}
+      value={value}
+      onSelectItem={(status) => setStatus(status)}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setItems}
+      style={styles.dropDown}
+    />
        <Text style={styles.formText}>Tanggal</Text>
        {/* <TextInput
        style={styles.input}
@@ -120,7 +152,7 @@ const AddList = () => {
        </TouchableOpacity>
      </View>
      {/* </ImageBackground> */}
-   </View>
+   </ScrollView>
   )
 }
 
@@ -188,6 +220,7 @@ const styles = StyleSheet.create({
       justifyContent : 'center',
       alignItems : 'center',
       marginTop: 20,
+      marginBottom: 30,
     },
   buttonText :{
     color : '#FFF',
@@ -198,7 +231,18 @@ const styles = StyleSheet.create({
     color : 'white',
     fontSize : 16,
     marginTop : 20,
-  }
+  },
+  dropDown : {
+        borderWidth : 0, 
+        backgroundColor : '#dbdbd9',
+        marginBottom : 20,
+        marginTop : 10
+      },
+      Text : {
+        color : '#323333',
+        fontWeight : '600',
+        fontSize : 16,
+    },
 
 })
 

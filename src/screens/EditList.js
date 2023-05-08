@@ -30,8 +30,8 @@ const EditList = ({route}) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-      {label: 'Aktif', value: 'aktif'},
-      {label: 'Selesai', value: 'selesai'}
+      {label: 'Uang Masuk', value: 'aktif'},
+      {label: 'Uang Keluar', value: 'selesai'}
     ]);
   
 
@@ -46,7 +46,7 @@ const EditList = ({route}) => {
     const UpdateList = async (ferry) => {
         console.log('value', ferry);
         try {
-            const response = await axios.put(`http://192.168.43.148:3800/list?id=${list_id}`, {
+            const response = await axios.put(`http://10.132.166.135:3800/list?id=${list_id}`, {
                 kegiatan: ferry.kegiatan,
                 status: value,
                 tanggal: ferry.tanggal,

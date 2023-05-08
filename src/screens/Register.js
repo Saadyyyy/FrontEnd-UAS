@@ -24,7 +24,7 @@ const Register = () => {
     console.log('value', value);
 
     try {
-      const response = await axios.post('http://192.168.43.148:3800/mahasiswa/',{
+      const response = await axios.post('http://10.132.166.135:3800/mahasiswa/',{
         nim : value.nim,
         nama : value.nama,
         password : value.password
@@ -58,10 +58,10 @@ const Register = () => {
         onChangeText={(nama) => setNama(nama)}
         value={nama}
         />
-        <Text style={styles.formText}>nim</Text>
+        <Text style={styles.formText}>Nip</Text>
         <TextInput
         style={styles.input}
-        placeholder ="nim"
+        placeholder ="nip"
         placeholderTextColor="#58565e"
         onChangeText={(nim) => setNim(nim)}
         value={nim}

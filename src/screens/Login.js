@@ -58,7 +58,7 @@ const Login = () => {
       console.log('value', value);
 
       try {
-        const response = await axios.post('http://192.168.43.148:3800/mahasiswa/login',{
+        const response = await axios.post('http://10.132.166.135:3800/mahasiswa/login',{
           nim : value.nim,
           password : value.password
         })
@@ -86,10 +86,10 @@ const Login = () => {
               <Image source={Illustration} style={styles.Illustration}/>
           </View>
           <View style={styles.form}>
-            <Text style={styles.formText}>Nim</Text>
+            <Text style={styles.formText}>Nip</Text>
             <TextInput
             style={styles.input}
-            placeholder ="Nim"
+            placeholder ="Nip"
             placeholderTextColor="#323333"
             onChangeText={(nim) => setNim(nim)}
             value={nim}
