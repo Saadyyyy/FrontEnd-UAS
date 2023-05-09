@@ -10,9 +10,6 @@ import {
   ScrollView,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
-// // import Illustration from '../assets/main.png'
-// import Cover from '../assets/Main2.jpg'
-// import Logo from '../assets/Logo.png'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -20,81 +17,67 @@ import DatePicker from 'react-native-date-picker'
 import { StackActions } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
 
-
-
-
-
 const AddList = () => {
 
-    const navigation = useNavigation();
-    const [kegiatan,setKegiatan] = React.useState('');
-    const [date, setDate] = useState(new Date());
-    const [id, setId] = useState('')
-    const [status, setStatus] = useState([])
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-      {label: 'Uang Masuk', value: 'aktif'},
-      {label: 'Uang Keluar', value: 'selesai'}
-    ]);
-  
-    const [data, setData] = useState({ 
-      nim: '',
-      password: '',
-      name: ''
-    })
+  const navigation = useNavigation();
+  const [kegiatan,setKegiatan] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [id, setId] = useState('')
+  const [status, setStatus] = useState('')
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Uang Masuk', value: 'aktif'},
+    {label: 'Uang Keluar', value: 'selesai'}
+  ]);
 
+  const [data, setData] = useState({ 
+    nim: '',
+    password: '',
+    name: ''
+  })
 
-    useEffect(() => {
-      getData()
-      return () => { };
-    }, []);
+  useEffect(() => {
+    getData()
+    return () => { };
+  }, []);
 
-
-    const getData = async () => {
-      try {
-        let nim = await AsyncStorage.getItem('nim')
-        let password = await AsyncStorage.getItem('password')
-        let name = await AsyncStorage.getItem('name')
-          if (nim !== null) {
-            
-              // value previously stored
-              setData({
-                nim: nim,
-                password: password,
-                name: name
-              })
-          }
-      } catch (e) {
-          // error reading value
-      }
-  }
-
-
-    const InsertList = async(value) => {
-      console.log('value', value);
-  
-      try {
-        const response = await axios.post('http://10.132.166.135:3800/list/',{
-          nim : data.nim,
-          kegiatan : value.kegiatan,
-          tanggal : date
+  const getData = async () => {
+    try {
+      let nim = await AsyncStorage.getItem('nim')
+      let password = await AsyncStorage.getItem('password')
+      let name = await AsyncStorage.getItem('name')
+      if (nim !== null) {
+        // value previously stored
+        setData({
+          nim: nim,
+          password: password,
+          name: name
         })
-        if(response.data.status == 200){
-          console.log('response', response.data);
-          navigation.dispatch(
-            StackActions.replace('Home')
-          );
-          ToastAndroid.show(response.data.metadata, ToastAndroid.SHORT)
-          ToastAndroid.show("Success adding new data", ToastAndroid.SHORT)
-        }
-      } catch (error) {
-        console.log(error);
-        ToastAndroid.show("Input Error", ToastAndroid.SHORT)
       }
-  
+    } catch (e) {
+      // error reading value
     }
+  }
+  const InsertList = async () => {
+    try {
+      const response = await axios.post('http://10.132.177.1:3800/list/',{
+  nim : data.nim,
+  kegiatan : kegiatan,
+  status : value, // pass the 'value' state as 'status'
+  tanggal : date
+})
 
+      if (response.data.status == 200) {
+        console.log('response', response.data);
+        navigation.dispatch(StackActions.replace('Home'));
+        ToastAndroid.show('Success adding new data', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log(error);
+      ToastAndroid.show('Input Error', ToastAndroid.SHORT);
+    }
+  };
   return (
     <ScrollView style={styles.container}>
     {/* <ImageBackground source={Cover} resizeMode="cover"> */}
@@ -115,18 +98,10 @@ const AddList = () => {
        value={kegiatan}
        />
            <Text style={styles.Text}>Status Kegiatan</Text>
-    {/* <TextInput
-        style={styles.input}
-        placeholder="Status kegiatan"
-        placeholderTextColor="white"
-        // secureTextEntry={true}
-        onChangeText={(status) => setStatus(status)}
-        value={status}
-    /> */}
     <DropDownPicker
       open={open}
       value={value}
-      onSelectItem={(status) => setStatus(status)}
+      onSelectItem={(item) => setValue(item.value)}
       items={items}
       setOpen={setOpen}
       setValue={setValue}
@@ -134,13 +109,6 @@ const AddList = () => {
       style={styles.dropDown}
     />
        <Text style={styles.formText}>Tanggal</Text>
-       {/* <TextInput
-       style={styles.input}
-       placeholder ="tanggal"
-       placeholderTextColor="#58565e"
-       onChangeText={(tanggal) => setTanggal(tanggal)}
-       value={tanggal}
-       /> */}
        <DatePicker date={date} onDateChange={setDate} mode='datetime' style={{marginVertical:20}}/>
      </View>
      <View style={styles.footer}>
@@ -151,7 +119,6 @@ const AddList = () => {
            <Text style = {styles.buttonText}>Tambah</Text>
        </TouchableOpacity>
      </View>
-     {/* </ImageBackground> */}
    </ScrollView>
   )
 }

@@ -64,10 +64,10 @@ const getData = async () => {
     console.log('value', value);
 
     try {
-      const responseAktif = await axios.post(`http://10.132.166.135:3800/list/searchAktif?nim=${data.nim}`,{
+      const responseAktif = await axios.post(`http://10.132.177.1:3800/list/searchAktif?nim=${data.nim}`,{
           cari: value.cari,
       })
-      const responseSelesai = await axios.post(`http://10.132.166.135:3800/list/searchSelesai?nim=${data.nim}`,{
+      const responseSelesai = await axios.post(`http://10.132.177.1:3800/list/searchSelesai?nim=${data.nim}`,{
           cari: value.cari,
       })
       if(responseAktif.data.status == 200){
@@ -88,9 +88,9 @@ const getData = async () => {
   const readData = async(value) => {
     console.log('value', value);
     try {
-      const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${value}`,{
+      const aktif = await axios.get(`http://10.132.177.1:3800/list/aktif?nim=${value}`,{
       })
-      const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${value}`,{
+      const selesai = await axios.get(`http://10.132.177.1:3800/list/selesai?nim=${value}`,{
       })
       if(aktif.data.status == 200){
         console.log('response', aktif.data);
@@ -112,11 +112,11 @@ const getData = async () => {
         console.log('value', value);
   
         try {
-          const response = await axios.put(`http://10.132.166.135:3800/list/done?id=${value}`,{
+          const response = await axios.put(`http://10.132.177.1:3800/list/done?id=${value}`,{
           })
-          const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${data.nim}`,{
+          const aktif = await axios.get(`http://10.132.177.1:3800/list/aktif?nim=${data.nim}`,{
           })
-          const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${data.nim}`,{
+          const selesai = await axios.get(`http://10.132.177.1:3800/list/selesai?nim=${data.nim}`,{
           })
           if(response.data.status == 200){
             console.log('response', response.data);
@@ -134,11 +134,11 @@ const getData = async () => {
       const DeleteList = async(value) => {
         console.log('value', value);
         try {
-          const response = await axios.delete(`http://10.132.166.135:3800/list?id=${value}`,{
+          const response = await axios.delete(`http://10.132.177.1:3800/list?id=${value}`,{
           })
-          const aktif = await axios.get(`http://10.132.166.135:3800/list/aktif?nim=${data.nim}`,{
+          const aktif = await axios.get(`http://10.132.177.1:3800/list/aktif?nim=${data.nim}`,{
           })
-          const selesai = await axios.get(`http://10.132.166.135:3800/list/selesai?nim=${data.nim}`,{
+          const selesai = await axios.get(`http://10.132.177.1:3800/list/selesai?nim=${data.nim}`,{
           })
           if(response.data.status == 200){
             console.log('response', response.data);

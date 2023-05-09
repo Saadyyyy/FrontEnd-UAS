@@ -58,7 +58,7 @@ const Login = () => {
       console.log('value', value);
 
       try {
-        const response = await axios.post('http://10.132.166.135:3800/mahasiswa/login',{
+        const response = await axios.post('http://10.132.177.1:3800/mahasiswa/login',{
           nim : value.nim,
           password : value.password
         })
@@ -75,9 +75,7 @@ const Login = () => {
         console.log(error);
         ToastAndroid.show("Cek kembali nim dan password", ToastAndroid.SHORT)
       }
-
     }
-
   return (
         <View style={styles.container}>
          {/* <ImageBackground source={Main} resizeMode="cover"> */}

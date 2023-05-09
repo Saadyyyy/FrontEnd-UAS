@@ -46,7 +46,7 @@ const EditList = ({route}) => {
     const UpdateList = async (ferry) => {
         console.log('value', ferry);
         try {
-            const response = await axios.put(`http://10.132.166.135:3800/list?id=${list_id}`, {
+            const response = await axios.put(`http://10.132.177.1:3800/list?id=${list_id}`, {
                 kegiatan: ferry.kegiatan,
                 status: value,
                 tanggal: ferry.tanggal,
@@ -63,7 +63,6 @@ const EditList = ({route}) => {
             ToastAndroid.show("Cek kembali nim dan password", ToastAndroid.SHORT)
         }
     }
-
 
   return (
     <View style={styles.container}>
@@ -88,7 +87,7 @@ const EditList = ({route}) => {
         onChangeText={(status) => setStatus(status)}
         value={status}
     /> */}
-    <DropDownPicker
+        <DropDownPicker
       open={open}
       value={value}
       onSelectItem={(status) => setStatus(status)}
@@ -99,14 +98,6 @@ const EditList = ({route}) => {
       style={styles.dropDown}
     />
     <Text style={styles.Text}>Tanggal</Text>
-    {/* <TextInput
-        style={styles.input}
-        placeholder="Tanggal Kegiatan"
-        placeholderTextColor="white"
-        // secureTextEntry={true}
-        onChangeText={(tanggal) => setTanggal(tanggal)}
-        value={tanggal}
-    /> */}
     <DatePicker date={date} onDateChange={setDate} mode='datetime' style={{marginVertical: 20}} />
     {console.log(date)}
     <TouchableOpacity

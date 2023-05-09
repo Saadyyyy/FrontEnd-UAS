@@ -62,7 +62,7 @@ const Account = () => {
     const resetPassword = async (value) => {
         console.log('value', value);
         try {
-            const response = await axios.put('http://10.132.166.135:3800/mahasiswa', {
+            const response = await axios.put('http://10.132.177.1:3800/mahasiswa', {
                 nim: value.nim,
                 nama : value.nama,
                 password: value.passwordLama,
